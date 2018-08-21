@@ -67,7 +67,7 @@
     _rootSplitter.fixedViewIndex = 1;
     _logSplitter.fixedViewIndex = 1;
     _infoSplitter.fixedViewIndex = 1;
-    _treeSplitter.hidden = YES;
+    _treeSplitter.splitterHidden = YES;
 
     _fieldEditor = [[FieldEditorTextView alloc] initWithFrame:NSZeroRect];
     [_fieldEditor setFieldEditor:YES];
@@ -229,14 +229,25 @@
             [msg appendFormat:@"sending %d files", sending];
         }
         [msg appendString:@"."];
-        NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", msg, @"Quit", @"Cancel", nil);
-        if (result != NSAlertDefaultReturn) {
+
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Quit LimeChat?";
+        alert.informativeText = msg;
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Cancel"];
+        NSModalResponse result = [alert runModal];
+        if (result != NSAlertFirstButtonReturn) {
             return NO;
         }
     }
     else if ([Preferences confirmQuit]) {
-        NSInteger result = NSRunAlertPanel(@"Quit LimeChat?", @"", @"Quit", @"Cancel", nil);
-        if (result != NSAlertDefaultReturn) {
+        NSAlert *alert = [[NSAlert alloc] init];
+        alert.messageText = @"Quit LimeChat?";
+        alert.informativeText = @"";
+        [alert addButtonWithTitle:@"Quit"];
+        [alert addButtonWithTitle:@"Cancel"];
+        NSModalResponse result = [alert runModal];
+        if (result != NSAlertFirstButtonReturn) {
             return NO;
         }
     }
@@ -392,18 +403,18 @@
     _threeColumns = value;
 
     if (_threeColumns) {
-        _infoSplitter.hidden = YES;
+        _infoSplitter.splitterHidden = YES;
         _infoSplitter.inverted = YES;
         [_leftTreeBase addSubview:_treeScrollView];
-        _treeSplitter.hidden = NO;
+        _treeSplitter.splitterHidden = NO;
         if (_treeSplitter.position < 1) _treeSplitter.position = 120;
         _treeScrollView.frame = _leftTreeBase.bounds;
     }
     else {
-        _treeSplitter.hidden = YES;
+        _treeSplitter.splitterHidden = YES;
         [_rightTreeBase addSubview:_treeScrollView];
         _infoSplitter.inverted = NO;
-        _infoSplitter.hidden = NO;
+        _infoSplitter.splitterHidden = NO;
         if (_infoSplitter.position < 1) _infoSplitter.position = 100;
         _treeScrollView.frame = _rightTreeBase.bounds;
     }

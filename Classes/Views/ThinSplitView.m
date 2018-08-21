@@ -92,16 +92,15 @@
     [self adjustSubviews];
 }
 
-- (void)setHidden:(BOOL)value
+- (void)setSplitterHidden:(BOOL)value
 {
-    if (_hidden == value) return;
-    _hidden = value;
+    _splitterHidden = value;
     [self adjustSubviews];
 }
 
 - (void)drawDividerInRect:(NSRect)rect
 {
-    if (_hidden) return;
+    if (_splitterHidden) return;
 
     if ([self isVertical]) {
         [[NSColor colorWithCalibratedWhite:0.65 alpha:1] set];
@@ -152,7 +151,7 @@
     NSRect fixedFrame = fixedView.frame;
     NSRect flyingFrame = flyingView.frame;
 
-    if (_hidden) {
+    if (_splitterHidden) {
         if ([self isVertical]) {
             fixedFrame = NSMakeRect(0, 0, 0, height);
             flyingFrame.origin = NSZeroPoint;

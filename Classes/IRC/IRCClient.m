@@ -26,6 +26,8 @@
 
 #define CTCP_MIN_INTERVAL   5
 
+@interface IRCClient () <HostResolverDelegate>
+@end
 
 @implementation IRCClient
 {
@@ -2132,7 +2134,6 @@
     c.nickColorNumber = colorNumber;
     c.keywords = keywords;
     c.excludeWords = excludeWords;
-    c.useAvatar = type == LINE_TYPE_PRIVMSG && [[_config.userInfo lowercaseString] contains:@"showtwitteravatar"];
 
     if (channel) {
         return [channel print:c];

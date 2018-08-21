@@ -27,7 +27,7 @@
 {
     self = [super init];
     if (self) {
-        [NSBundle loadNibNamed:@"Preferences" owner:self];
+        [[NSBundle mainBundle] loadNibNamed:@"Preferences" owner:self topLevelObjects:nil];
     }
     return self;
 }
@@ -288,7 +288,7 @@
 {
     [_transcriptFolderButton selectItem:[_transcriptFolderButton itemAtIndex:0]];
 
-    if (returnCode == NSOKButton) {
+    if (returnCode == NSModalResponseOK) {
         NSString* path = [[[panel URLs] objectAtIndex:0] path];
 
         // create directory
